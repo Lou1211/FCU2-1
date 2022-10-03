@@ -1,0 +1,54 @@
+/**
+ * String 函式測試.
+ */
+public class Hello {
+  /**
+   * String 函式測試.
+   */
+  public static void main(String[] args) {
+
+    String hello = "Hello \n";
+    String javaclass = "\"Class\"";
+
+    String concatResult = hello + javaclass;
+
+    int len = concatResult.length();
+    int index = concatResult.indexOf('C');
+
+    boolean isContained1 = concatResult.contains("Class");
+    boolean isContained2 = concatResult.contains("class");
+
+    boolean isStartsWith = concatResult.startsWith("He");
+    boolean isEndsWith = concatResult.endsWith("ss");
+
+    String replaced1 = concatResult.replace("l", "L");
+    String replaced2 = concatResult.replaceFirst("l", "L");
+
+    String[] split1 = concatResult.split(" ");
+    String[] split2 = concatResult.split("l");
+
+    String sub = concatResult.substring(5);
+
+    String lowercase = concatResult.toLowerCase();
+    String uppercase = concatResult.toUpperCase();
+
+    System.out.println(concatResult);
+    System.out.println(len + ";" + index);
+    System.out.println(isContained1 + ";" + isContained2);
+    System.out.println(isStartsWith + ";" + isEndsWith);
+    System.out.println(replaced1 + ";" + replaced2);
+
+    for (int i = 0; i < split1.length; i++) {
+      System.out.println(split1[i]);
+    }
+
+    for (int i = 0; i < split2.length; i++) {
+      System.out.println(split2[i]);
+    }
+
+    System.out.println(sub);
+
+    System.out.println(lowercase);
+    System.out.println(uppercase);
+  }
+}
