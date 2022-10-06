@@ -1,0 +1,129 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct
+{
+    int row;
+    int col;
+    int val;
+} term;
+
+term a[20];
+term b[20];
+term bt[20];
+term sol[20];
+
+int main()
+{
+    int ar, ac, av, br, bc, bv;
+
+    scanf("%d%d%d", &ar, &ac, &av);
+    for (int i = 0; i < av; i++)
+    {
+        scanf("%d%d%d", &a[i].row, &a[i].col, &a[i].val);
+    }
+
+    scanf("%d%d%d", &br, &bc, &bv);
+    for (int i = 0; i < bv; i++)
+    {
+        scanf("%d%d%d", &b[i].row, &b[i].col, &b[i].val);
+    }
+
+    /*for (int i = 0; i < av; i++)
+    {
+        printf("++ %d %d %d\n", a[i].row, a[i].col, a[i].val);
+    }
+    for (int i = 0; i < bv; i++)
+    {
+        printf("+ %d %d %d\n", b[i].row, b[i].col, b[i].val);
+    }*/
+
+    int count = 0, btr = bc, btc = br, btv = bv;
+    for (int i = 0; i < bc; i++)
+    {
+        for (int j = 0; j < bv; j++)
+        {
+            if (b[j].col == i)
+            {
+                bt[count].row = b[j].col;
+                bt[count].col = b[j].row;
+                bt[count].val = b[j].val;
+                count++;
+            }
+        }
+    }
+    /*for (int i = 0; i < bv; i++)
+    {
+        printf("- %d %d %d\n", bt[i].row, bt[i].col, bt[i].val);
+    }*/
+
+    int row = a[0].row, rowst = 0;
+    int sum = 0;
+    int sr, sc, sv = 0;
+    sr = ar;
+    sc = bc;
+
+    a[av + 1].row = ar;
+    bt[bv + 1].row = bc;
+    bt[bv + 1].col = 0;
+
+    for (int i = 0; i < av;)
+    {
+        int col = bt[0].row;
+        for (int j = 0; j <= bv; j++)
+        {
+            if (a[i].row != row)
+            {
+                if (sum != 0)
+                {
+                    sol[sv].row = row;
+                    sol[sv].col = col;
+                    sol[sv].val = sum;
+                    sum++;
+                }
+                i = rowst;
+                for (; bt[j].row == col; j++)
+                    ;
+                col = bt[j].row;
+            }
+            else if (bt[j].row != col)
+            {
+                if (sum != 0)
+                {
+                    sol[sv].row = row;
+                    sol[sv].col = col;
+                    sol[sv].val = sum;
+                    sum = 0;
+                    sv++;
+                }
+
+                i = rowst;
+                col = bt[j].row;
+            }
+            else
+            {
+                if (a[i].col > bt[j].col)
+                {
+                    i++;
+                }
+                else if (a[i].col == bt[j].col)
+                {
+                    sum += (a[i++].val * bt[j++].val);
+                }
+                else
+                {
+                    j++;
+                }
+            }
+        }
+        for (; a[i].row == row;)
+            ;
+        rowst = i, row = a[i].row;
+    }
+
+    printf("%d %d %d\n", sr, sc, sv);
+    for (int i = 0; i < sv + 1; i++)
+    {
+        printf("%d %d %d\n", sol[i].row, sol[i].col, sol[i].val);
+    }
+}
