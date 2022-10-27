@@ -79,7 +79,7 @@ int main()
     pos.row = 1;
     pos.col = 1;
     pos.dir = 0;
-    while (pos.row != r - 2 && pos.col != c - 2)
+    while (pos.row != r - 2 || pos.col != c - 2)
     {
         int ways = findWays();
         if (ways >= 0)
