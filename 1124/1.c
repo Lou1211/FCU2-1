@@ -123,3 +123,4 @@ int main()
     printf("\n");
     count = 0;*/
 }
+// http://programer-learn.blogspot.com/2010/12/c_21.html
