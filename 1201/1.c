@@ -5,7 +5,7 @@ typedef struct node *treePointer;
 typedef struct node
 {
     int data;
-    treePointer left, right, Fp;
+    treePointer left, right, Up;
 } node;
 
 int num;
@@ -95,7 +95,7 @@ int main()
 
     int find;
     scanf("%d", &find);
-    node *dnode;
+    node *d;
 
     for (int i = 0; i < num; i++)
     {
@@ -106,30 +106,30 @@ int main()
             {
                 tmp = searchRoot(tree[i]->left);
                 //printf("tmp = %d\n", tmp);
-                dnode = tree[i]->left;
-                while (dnode->right != NULL)
+                d = tree[i]->left;
+                while (d->right != NULL)
                 {
-                    dnode = dnode->right;
+                    d = d->right;
                 }
-                if (dnode->Fp->left->data == tmp)
+                if (d->Up->left->data == tmp)
                 {
-                    dnode->Fp->left = NULL;
+                    d->Up->left = NULL;
                 }
-                else if (dnode->Fp->right->data == tmp)
+                else if (d->Up->right->data == tmp)
                 {
-                    dnode->Fp->right = NULL;
+                    d->Up->right = NULL;
                 }
                 tree[i]->data = tmp;
             }
             else
             {
-                if (tree[i]->Fp->left->data == find)
+                if (tree[i]->Up->left->data == find)
                 {
-                    tree[i]->Fp->left = NULL;
+                    tree[i]->Up->left = NULL;
                 }
-                else if (tree[i]->Fp->right->data == find)
+                else if (tree[i]->Up->right->data == find)
                 {
-                    tree[i]->Fp->right = NULL;
+                    tree[i]->Up->right = NULL;
                 }
             }
         }
