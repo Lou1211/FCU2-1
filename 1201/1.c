@@ -5,7 +5,7 @@ typedef struct node *treePointer;
 typedef struct node
 {
     int data;
-    treePointer left, right;
+    treePointer left, right, Fp;
 } node;
 
 int num;
@@ -19,6 +19,7 @@ void insert(node *root, node *tmp)
         if (root->left == NULL)
         {
             root->left = tmp;
+            tmp->Fp = root;
         }
         else
         {
@@ -30,6 +31,7 @@ void insert(node *root, node *tmp)
         if (root->right == NULL)
         {
             root->right = tmp;
+            tmp->Fp = root;
         }
         else
         {
@@ -54,7 +56,6 @@ void preorder(node *Pointer)
 {
     if (Pointer)
     {
-        // printf("%d ", Pointer->data);
         if (count == 0)
         {
             printf("%d", Pointer->data);
@@ -73,7 +74,6 @@ int main()
 {
     scanf("%d", &num);
     node *tree[num];
-    // printf("0");
     root = tree[0];
     for (int i = 0; i < num; i++)
     {
@@ -95,49 +95,41 @@ int main()
 
     int find;
     scanf("%d", &find);
+    node *dnode;
+
     for (int i = 0; i < num; i++)
     {
         if (tree[i]->data == find)
         {
             int tmp;
-            if (tree[i]->left != NULL || tree[i]->right != NULL)
+            if (tree[i]->left != NULL)
             {
                 tmp = searchRoot(tree[i]->left);
-                printf("tmp = %d\n", tmp);
-                for (int j = 0; j < num; j++)
+                //printf("tmp = %d\n", tmp);
+                dnode = tree[i]->left;
+                while (dnode->right != NULL)
                 {
-                    printf("%d %d,r=%d l=%d\n", j, tree[j]->data, tree[j]->right->data, tree[j]->left->data);
-                    if (tree[j]->left->data == tmp)
-                    {
-                        printf(" l\n");
-                        tree[j]->left = NULL;
-                        j = num - 1;
-                    }
-                    else if (tree[j]->right->data == tmp)
-                    {
-                        printf(" r\n");
-                        tree[j]->right = NULL;
-                        j = num - 1;
-                    }
+                    dnode = dnode->right;
+                }
+                if (dnode->Fp->left->data == tmp)
+                {
+                    dnode->Fp->left = NULL;
+                }
+                else if (dnode->Fp->right->data == tmp)
+                {
+                    dnode->Fp->right = NULL;
                 }
                 tree[i]->data = tmp;
             }
             else
             {
-                printf(" 2\n");
-                for (int j = 0; j < num; j++)
+                if (tree[i]->Fp->left->data == find)
                 {
-                    printf(" %d\n", j);
-                    if (tree[j]->left->data == find)
-                    {
-                        tree[j]->left = NULL;
-                        j = num - 1;
-                    }
-                    else if (tree[j]->right->data == find)
-                    {
-                        tree[j]->right = NULL;
-                        j = num - 1;
-                    }
+                    tree[i]->Fp->left = NULL;
+                }
+                else if (tree[i]->Fp->right->data == find)
+                {
+                    tree[i]->Fp->right = NULL;
                 }
             }
         }
@@ -152,4 +144,3 @@ int main()
 
     preorder(root);
 }
-// http://programer-learn.blogspot.com/2010/12/c_21.html
